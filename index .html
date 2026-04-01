@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小黑球装机铺 - 专业定制高性价比电脑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+
+        :root {
+            --primary-color: #165DFF;
+            --dark-color: #1d1d1f;
+            --light-color: #f5f5f7;
+            --gray-color: #86868b;
+            --white-color: #ffffff;
+            --black-line: 1px solid #1d1d1f;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+            --success-color: #00b42a;
+            --danger-color: #f53f3f;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-bottom: 40px;
+        }
+        .page.active {
+            display: block;
+            z-index: 10;
+        }
+
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .password-modal.active {
+            display: flex;
+        }
+        .password-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-hover);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .password-box h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        .password-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: var(--black-line);
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .password-btn {
+            padding: 10px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .hero {
+            height: 72vh;
+            background: linear-gradient(135deg, #165DFF 0%, #0039cb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white-color);
+            padding: 0 20px;
+            border-bottom: var(--black-line);
+        }
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+        .hero-content p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .config-card {
+            background: var(--white-color);
+            border-radius: 12px;
+            padding: 30px 25px;
+            box-shadow: var(--shadow);
+            border: var(--black-line);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: left;
+        }
+        .config-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        .config-card h3 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .config-card p {
+            color: var(--gray-color);
+            line-height: 1.8;
+        }
+        .recommend-badge {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .home-footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: var(--black-line);
+            color: var(--gray-color);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .config-header {
+            background: linear-gradient(135deg, #165DFF 0%, #0039cb 100%);
+            padding: 20px;
+            text-align: center;
+            color: var(--white-color);
+            position: relative;
+            border-bottom: var(--black-line);
+        }
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--white-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: var(--black-line);
+        }
+        .back-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
+        .config-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .config-wrap {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .form-card {
+            background: var(--white-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: var(--black-line);
+            margin-bottom: 30px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 30px;
+        }
+        .form-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .param-tip {
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+        .form-select {
+            padding: 12px 15px;
+            border: var(--black-line);
+            border-radius: 8px;
+            font-size: 15px;
+            background: var(--white-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .price-card {
+            background: var(--white-color);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: var(--black-line);
+            text-align: center;
+        }
+        .price-total {
+            font-size: 16px;
+            color: var(--gray-color);
+            margin-bottom: 8px;
+        }
+        .price-fee {
+            font-size: 16px;
+            color: var(--gray-color);
+            margin-bottom: 16px;
+        }
+        .price-final {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .copy-btn {
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: var(--white-color);
+            border: var(--black-line);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .copy-btn:hover {
+            background: #0039cb;
+            transform: translateY(-3px);
+        }
+
+        .content-wrap {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .content-card {
+            background: var(--white-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: var(--black-line);
+            margin-bottom: 30px;
+        }
+        .content-card h3 {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .content-card h4 {
+            font-size: 20px;
+            margin: 25px 0 10px;
+        }
+        .content-card p, .content-card li {
+            color: var(--dark-color);
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .content-card ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .comment-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+        .comment-user {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .comment-star {
+            color: #ff9500;
+            margin-bottom: 8px;
+        }
+
+        .admin-page {
+            background: var(--light-color);
+            padding: 20px;
+        }
+        .admin-header {
+            max-width: 1400px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .admin-header h2 {
+            color: var(--primary-color);
+            font-size: 32px;
+        }
+        .admin-back-btn {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        .admin-sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: var(--black-line);
+            height: fit-content;
+        }
+        .sidebar-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .sidebar-item:hover {
+            background: #f0f0f0;
+        }
+        .sidebar-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        .admin-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: var(--black-line);
+            overflow-x: auto;
+        }
+        .content-panel {
+            display: none;
+        }
+        .content-panel.active {
+            display: block;
+        }
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 1400px;
+        }
+        .price-table th, .price-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            min-width: 120px;
+        }
+        .price-table th {
+            background: var(--light-color);
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .price-input, .text-input, .table-select {
+            width: 100%;
+            padding: 6px 8px;
+            border: var(--black-line);
+            border-radius: 4px;
+        }
+        .delete-btn {
+            padding: 4px 10px;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .add-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .save-btn {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .export-btn {
+            margin-top: 20px;
+            margin-left: 15px;
+            padding: 10px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .password-change-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        .password-change-section h4 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        .password-form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            max-width: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 40vh !important;
+                padding: 0 15px;
+            }
+            .hero-content h1 {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+            .hero-content p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            .card-grid {
+                gap: 15px;
+            }
+            .config-card {
+                padding: 20px 15px;
+            }
+            .config-card h3 {
+                font-size: 20px;
+            }
+            .config-card p {
+                font-size: 14px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .form-card {
+                padding: 20px 15px;
+            }
+            .config-header {
+                padding: 15px;
+            }
+            .config-header h2 {
+                font-size: 20px;
+            }
+            .back-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            .price-card {
+                padding: 20px 15px;
+            }
+            .price-final {
+                font-size: 24px;
+            }
+            .copy-btn {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+            .admin-container {
+                grid-template-columns: 1fr;
+            }
+            .admin-sidebar {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+            }
+            .sidebar-item {
+                white-space: nowrap;
+                margin-bottom: 0;
+            }
+            .content-card {
+                padding: 20px 15px;
+            }
+            .content-card h3 {
+                font-size: 22px;
+            }
+            .admin-content {
+                padding: 20px 15px;
+            }
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="password-modal" id="passwordModal">
+    <div class="password-box">
+        <h3>管理员验证</h3>
+        <input type="password" class="password-input" id="adminPasswordInput" placeholder="请输入管理员密码">
+        <button class="password-btn" id="verifyPasswordBtn">验证进入</button>
+    </div>
+</div>
+
+<div class="page active" id="homePage">
+    <div class="hero">
+        <div class="hero-content">
+            <h1>小黑球装机铺</h1>
+            <p>专业定制高性价比电脑 | 一站式装机服务 | 全流程售后保障</p>
+        </div>
+    </div>
+
+    <div class="card-container">
+        <h3 style="margin-bottom: 20px; color: var(--primary-color); font-size: 28px;">🔥 精选推荐配置</h3>
+        <div class="card-grid" id="recommendGrid"></div>
+
+        <h3 style="margin: 50px 0 20px; color: var(--dark-color); font-size: 24px;">💻 自选配置系统</h3>
+        <div class="card-grid">
+            <div class="config-card" id="e5Card">
+                <h3>E5 配置选择</h3>
+                <p>多开神器 | 高性价比服务器级配置 | 工作室首选</p>
+            </div>
+            <div class="config-card" id="coreCard">
+                <h3>E3 & 酷睿配置选择</h3>
+                <p>游戏办公 | 家用娱乐全能配置 | 性价比之选</p>
+            </div>
+            <div class="config-card" id="guideCard">
+                <h3>装机指南和问题解决</h3>
+                <p>显卡安装 | 系统安装 | BIOS设置全流程</p>
+            </div>
+            <div class="config-card" id="commentCard">
+                <h3>买家真实评价</h3>
+                <p>真实用户反馈 | 装机效果展示 | 使用体验分享</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-footer">
+        © 2025 小黑球装机铺 | 所有配件均提供质保服务 | 全程一对一技术支持
+    </div>
+</div>
+
+<div class="page" id="e5ConfigPage">
+    <div class="config-header">
+        <button class="back-btn" id="backHomeFromE5">← 返回主页</button>
+        <h2>E5配置自选系统</h2>
+    </div>
+
+    <div class="config-wrap">
+        <div class="form-card">
+            <div class="form-grid">
+                <div class="form-item">
+                    <label class="form-label">CPU型号 <span class="param-tip">ⓘ 配件参数</span></label>
+                    <select class="form-select" id="e5_cpuSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">主板型号</label>
+                    <select class="form-select" id="e5_boardSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">内存频率</label>
+                    <select class="form-select" id="e5_ramFreqSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">内存大小</label>
+                    <select class="form-select" id="e5_memorySelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">显卡类型 <span class="param-tip">ⓘ 配件参数</span></label>
+                    <select class="form-select" id="e5_gpuSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">硬盘大小</label>
+                    <select class="form-select" id="e5_diskSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">电源大小 <span class="param-tip">ⓘ 配件参数</span></label>
+                    <select class="form-select" id="e5_powerSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">机箱类型</label>
+                    <select class="form-select" id="e5_caseSelect"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="price-card">
+            <p class="price-total">配件总价：<span id="e5_partsTotal">¥0.00</span></p>
+            <p class="price-fee">+ <span id="e5_serviceFee">150</span>元 (装机+运费+售后+散热)</p>
+            <p class="price-final">售价：<span id="e5_finalPrice">¥0.00</span></p>
+            <button class="copy-btn" id="e5_copyBtn">📋 复制配置和价格</button>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="coreConfigPage">
+    <div class="config-header">
+        <button class="back-btn" id="backHomeFromCore">← 返回主页</button>
+        <h2>E3&酷睿配置自选系统</h2>
+    </div>
+
+    <div class="config-wrap">
+        <div class="form-card">
+            <div class="form-grid">
+                <div class="form-item">
+                    <label class="form-label">CPU型号 <span class="param-tip">ⓘ 配件参数</span></label>
+                    <select class="form-select" id="core_cpuSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">主板型号</label>
+                    <select class="form-select" id="core_boardSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">内存频率</label>
+                    <select class="form-select" id="core_ramFreqSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">内存大小</label>
+                    <select class="form-select" id="core_memorySelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">显卡类型 <span class="param-tip">ⓘ 配件参数</span></label>
+                    <select class="form-select" id="core_gpuSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">硬盘大小</label>
+                    <select class="form-select" id="core_diskSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">电源大小 <span class="param-tip">ⓘ 配件参数</span></label>
+                    <select class="form-select" id="core_powerSelect"></select>
+                </div>
+                <div class="form-item">
+                    <label class="form-label">机箱类型</label>
+                    <select class="form-select" id="core_caseSelect"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="price-card">
+            <p class="price-total">配件总价：<span id="core_partsTotal">¥0.00</span></p>
+            <p class="price-fee">+ <span id="core_serviceFee">150</span>元 (装机+运费+售后+散热)</p>
+            <p class="price-final">售价：<span id="core_finalPrice">¥0.00</span></p>
+            <button class="copy-btn" id="core_copyBtn">📋 复制配置和价格</button>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="guidePage">
+    <div class="config-header">
+        <button class="back-btn" id="backHomeFromGuide">← 返回主页</button>
+        <h2>装机指南和问题解决</h2>
+    </div>
+
+    <div class="content-wrap">
+        <div class="content-card">
+            <h3>新手装机全流程指南</h3>
+            
+            <h4>一、装机前准备</h4>
+            <ul>
+                <li>准备工具：十字螺丝刀、防静电手套/手环、扎带、硅脂</li>
+                <li>配件核对：CPU、主板、内存、显卡、硬盘、电源、机箱、散热</li>
+                <li>防静电：操作前摸一下金属物体释放静电，避免击穿硬件</li>
+            </ul>
+
+            <h4>二、装机步骤（按顺序操作）</h4>
+            <ol>
+                <li><strong>CPU安装</strong>：打开主板CPU插槽拉杆，对准三角标记放入CPU，压下拉杆固定</li>
+                <li><strong>散热安装</strong>：CPU表面均匀涂抹硅脂（米粒大小即可），安装散热器并固定插好风扇线</li>
+                <li><strong>内存安装</strong>：掰开内存插槽卡扣，对准缺口垂直按下，听到咔哒声即安装完成</li>
+                <li><strong>主板入箱</strong>：机箱内安装铜柱，放入主板对准螺丝孔，拧紧螺丝固定</li>
+                <li><strong>电源安装</strong>：电源放入机箱，拧紧螺丝，先插主板24Pin供电、CPU 8Pin供电</li>
+                <li><strong>硬盘安装</strong>：SSD/HDD放入机箱硬盘位，拧紧螺丝，插好SATA线和供电线</li>
+                <li><strong>显卡安装</strong>：拆掉机箱PCI挡板，对准PCIe插槽垂直按下显卡，拧紧螺丝，插好显卡供电线</li>
+                <li><strong>跳线接线</strong>：按主板说明书接好开机、重启、USB、音频跳线</li>
+                <li><strong>理线收尾</strong>：用扎带整理线材，盖上机箱侧板</li>
+            </ol>
+
+            <h4>三、BIOS设置</h4>
+            <ul>
+                <li>开机按Del/F2/F12（不同主板按键不同）进入BIOS</li>
+                <li>开启XMP/EXPO内存超频，达到内存标称频率</li>
+                <li>设置启动项为你的U盘/硬盘（装系统用）</li>
+                <li>开启安全启动、TPM2.0（安装Win11需要）</li>
+                <li>按F10保存设置并重启</li>
+            </ul>
+
+            <h4>四、系统安装</h4>
+            <ol>
+                <li>用另一台电脑制作系统U盘：下载微软官方MediaCreationTool，写入U盘</li>
+                <li>U盘插入新电脑，开机按启动项快捷键，选择U盘启动</li>
+                <li>按提示完成系统安装，选择对应版本，输入激活码（可后续激活）</li>
+                <li>系统安装完成后，进入主板官网下载对应驱动，优先安装芯片组、显卡、网卡驱动</li>
+            </ol>
+
+            <h4>五、常见问题解决</h4>
+            <ul>
+                <li><strong>开机无反应</strong>：检查电源是否通电、主板24Pin/CPU 8Pin是否插紧、开机跳线是否接对</li>
+                <li><strong>开机黑屏无显示</strong>：重新插拔内存/显卡、检查视频线是否插在显卡上（不要插主板接口）</li>
+                <li><strong>温度过高</strong>：检查散热器风扇是否转动、硅脂是否涂抹正确、机箱风道是否通畅</li>
+                <li><strong>找不到硬盘</strong>：重新插拔SATA线/供电线、更换SATA接口、检查硬盘是否损坏</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="commentPage">
+    <div class="config-header">
+        <button class="back-btn" id="backHomeFromComment">← 返回主页</button>
+        <h2>买家真实评价</h2>
+    </div>
+
+    <div class="content-wrap">
+        <div class="content-card">
+            <div class="comment-item">
+                <div class="comment-user">张先生 | 游戏玩家</div>
+                <div class="comment-star">★★★★★</div>
+                <p>12400F+3060的配置，玩原神、吃鸡全高画质丝滑不卡，老板给的价格比电脑城便宜快1000块，装机走线特别整齐，还送了系统U盘，售后有问必答，太靠谱了！</p>
+            </div>
+            <div class="comment-item">
+                <div class="comment-user">李老板 | 工作室多开</div>
+                <div class="comment-star">★★★★★</div>
+                <p>一次性拿了5台2696v3的机器，虚拟机多开20个窗口不卡，稳定性拉满，价格比同行低不少，老板还包了运费，后续有需求还来这家！</p>
+            </div>
+            <div class="comment-item">
+                <div class="comment-user">王同学 | 办公家用</div>
+                <div class="comment-star">★★★★★</div>
+                <p>纯小白一个，老板耐心给我推荐了E3的配置，日常办公、追剧、上网课完全够用，一千多块钱搞定全套，还远程教我怎么用，太贴心了！</p>
+            </div>
+            <div class="comment-item">
+                <div class="comment-user">刘先生 | 设计剪辑</div>
+                <div class="comment-star">★★★★★</div>
+                <p>13700KF+4070Ti的配置，PR/AE渲染速度特别快，老板给的配置单特别合理，没有任何溢价，装机测试好才发过来，到手直接用，太省心了！</p>
+            </div>
+            <div class="comment-item">
+                <div class="comment-user">赵同学 | 新手装机</div>
+                <div class="comment-star">★★★★★</div>
+                <p>第一次自己装机，老板给了详细的教程，全程一对一指导，从选配置到点亮机器，一步一步教我，最后一次点亮，太有成就感了！价格也特别良心！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="adminPage">
+    <div class="admin-page">
+        <div class="admin-header">
+            <h2>小黑球装机铺 - 后台管理</h2>
+            <button class="admin-back-btn" id="adminBackBtn">← 返回前台</button>
+        </div>
+        <div class="admin-container">
+            <div class="admin-sidebar">
+                <div class="sidebar-item" data-panel="e5Cpu">E5 CPU管理</div>
+                <div class="sidebar-item" data-panel="e5Board">E5 主板管理</div>
+                <div class="sidebar-item" data-panel="coreCpu">酷睿CPU管理</div>
+                <div class="sidebar-item" data-panel="coreBoard">酷睿主板管理</div>
+                <div class="sidebar-item" data-panel="memory">内存管理</div>
+                <div class="sidebar-item" data-panel="gpu">显卡管理</div>
+                <div class="sidebar-item" data-panel="disk">硬盘管理</div>
+                <div class="sidebar-item" data-panel="power">电源管理</div>
+                <div class="sidebar-item" data-panel="case">机箱管理</div>
+                <div class="sidebar-item active" data-panel="recommend">推荐配置</div>
+                <div class="sidebar-item" data-panel="service">服务费&密码</div>
+            </div>
+            <div class="admin-content">
+                <div class="content-panel" id="e5CpuPanel">
+                    <h3>E5 CPU 管理</h3>
+                    <table class="price-table" id="e5CpuTable">
+                        <thead>
+                            <tr>
+                                <th>CPU型号</th>
+                                <th>价格(元)</th>
+                                <th>代系</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('e5Cpu')">+ 添加新CPU</button>
+                    <button class="save-btn" onclick="saveAdminData('e5Cpu')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="e5BoardPanel">
+                    <h3>E5 主板 管理</h3>
+                    <table class="price-table" id="e5BoardTable">
+                        <thead>
+                            <tr>
+                                <th>主板型号</th>
+                                <th>价格(元)</th>
+                                <th>支持代系</th>
+                                <th>内存类型</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('e5Board')">+ 添加新主板</button>
+                    <button class="save-btn" onclick="saveAdminData('e5Board')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="coreCpuPanel">
+                    <h3>酷睿/E3 CPU 管理</h3>
+                    <table class="price-table" id="coreCpuTable">
+                        <thead>
+                            <tr>
+                                <th>CPU型号</th>
+                                <th>价格(元)</th>
+                                <th>代系</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('coreCpu')">+ 添加新CPU</button>
+                    <button class="save-btn" onclick="saveAdminData('coreCpu')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="coreBoardPanel">
+                    <h3>酷睿主板 管理</h3>
+                    <table class="price-table" id="coreBoardTable">
+                        <thead>
+                            <tr>
+                                <th>主板型号</th>
+                                <th>价格(元)</th>
+                                <th>支持代系</th>
+                                <th>内存类型</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('coreBoard')">+ 添加新主板</button>
+                    <button class="save-btn" onclick="saveAdminData('coreBoard')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="memoryPanel">
+                    <h3>内存 管理</h3>
+                    <table class="price-table" id="memoryTable">
+                        <thead>
+                            <tr>
+                                <th>规格</th>
+                                <th>价格(元)</th>
+                                <th>类型</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('memory')">+ 添加新内存</button>
+                    <button class="save-btn" onclick="saveAdminData('memory')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="gpuPanel">
+                    <h3>显卡 管理</h3>
+                    <table class="price-table" id="gpuTable">
+                        <thead>
+                            <tr>
+                                <th>显卡型号</th>
+                                <th>价格(元)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('gpu')">+ 添加新显卡</button>
+                    <button class="save-btn" onclick="saveAdminData('gpu')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="diskPanel">
+                    <h3>硬盘 管理</h3>
+                    <table class="price-table" id="diskTable">
+                        <thead>
+                            <tr>
+                                <th>硬盘规格</th>
+                                <th>价格(元)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('disk')">+ 添加新硬盘</button>
+                    <button class="save-btn" onclick="saveAdminData('disk')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="powerPanel">
+                    <h3>电源 管理</h3>
+                    <table class="price-table" id="powerTable">
+                        <thead>
+                            <tr>
+                                <th>电源规格</th>
+                                <th>价格(元)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('power')">+ 添加新电源</button>
+                    <button class="save-btn" onclick="saveAdminData('power')">保存修改</button>
+                </div>
+
+                <div class="content-panel" id="casePanel">
+                    <h3>机箱 管理</h3>
+                    <table class="price-table" id="caseTable">
+                        <thead>
+                            <tr>
+                                <th>机箱类型</th>
+                                <th>价格(元)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addItem('case')">+ 添加新机箱</button>
+                    <button class="save-btn" onclick="saveAdminData('case')">保存修改</button>
+                </div>
+
+                <div class="content-panel active" id="recommendPanel">
+                    <h3>推荐配置管理</h3>
+                    <table class="price-table" id="recommendTable">
+                        <thead>
+                            <tr>
+                                <th>配置名称</th>
+                                <th>标签文字</th>
+                                <th>目标平台</th>
+                                <th>CPU型号</th>
+                                <th>主板型号</th>
+                                <th>内存规格</th>
+                                <th>显卡型号</th>
+                                <th>硬盘规格</th>
+                                <th>电源规格</th>
+                                <th>机箱类型</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button class="add-btn" onclick="addRecommend()">+ 添加推荐配置</button>
+                    <button class="save-btn" onclick="saveRecommend()">保存推荐配置</button>
+                </div>
+
+                <div class="content-panel" id="servicePanel">
+                    <h3>服务费设置</h3>
+                    <div style="margin-top: 20px;">
+                        <label>装机服务费(元)：</label>
+                        <input type="number" id="serviceFeeInput" class="price-input" value="150" style="width: 150px;">
+                    </div>
+                    <button class="save-btn" onclick="saveServiceFee()">保存修改</button>
+                    <button class="export-btn" onclick="exportFullCode()">导出完整最新代码</button>
+
+                    <div class="password-change-section">
+                        <h4>修改管理员密码</h4>
+                        <div class="password-form-grid">
+                            <input type="password" class="password-input" id="oldPasswordInput" placeholder="请输入当前密码">
+                            <input type="password" class="password-input" id="newPasswordInput" placeholder="请输入新密码">
+                            <input type="password" class="password-input" id="confirmPasswordInput" placeholder="请确认新密码">
+                        </div>
+                        <button class="save-btn" onclick="changePassword()" style="margin-top: 15px;">修改密码</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = "xiaohuiqiu_data_v6";
+    const PASSWORD_KEY = "xiaohuiqiu_admin_password";
+
+    const DEFAULT_DATA = {
+        e5Cpu: [
+            { name: "E5 2673 V3", price: 180, gen: "v3" },
+            { name: "E5 2650 V2", price: 80, gen: "v2" },
+            { name: "E5 2689 V3", price: 120, gen: "v3" },
+            { name: "E5 2666 V3", price: 260, gen: "v3" },
+            { name: "E5 2696 V3", price: 290, gen: "v3" }
+        ],
+        e5Board: [
+            { name: "X99 DDR3 主板 (科脑)", price: 320, gen: "v3,v4", ramType: "DDR3", freq: ["1333MHz", "1600MHz"] },
+            { name: "X99 DDR4 主板 (华南金牌)", price: 550, gen: "v3,v4", ramType: "DDR4", freq: ["2133MHz", "2400MHz"] },
+            { name: "X79 主板 (华南金牌)", price: 450, gen: "v2", ramType: "DDR3", freq: ["1333MHz", "1600MHz"] }
+        ],
+        coreCpu: [
+            { name: "i3-12100", price: 880, gen: "12代" },
+            { name: "i5-12400F", price: 1350, gen: "12代" },
+            { name: "i7-13700KF", price: 2980, gen: "13代" },
+            { name: "E3-1231 V3", price: 350, gen: "E3" },
+            { name: "i5-10400F", price: 750, gen: "10代" }
+        ],
+        coreBoard: [
+            { name: "H610 主板", price: 780, gen: "12代,13代", ramType: "DDR4", freq: ["3200MHz"] },
+            { name: "B760 主板", price: 1250, gen: "12代,13代", ramType: "DDR4", freq: ["3200MHz", "3600MHz"] },
+            { name: "B85 主板", price: 280, gen: "E3", ramType: "DDR3", freq: ["1333MHz", "1600MHz"] },
+            { name: "H410 主板", price: 520, gen: "10代", ramType: "DDR4", freq: ["2666MHz"] }
+        ],
+        memory: [
+            { name: "16G (8+8) ECC REG", price: 350, type: "ECC" },
+            { name: "32G (16+16) ECC REG", price: 680, type: "ECC" },
+            { name: "16G (8+8) DDR4", price: 360, type: "DDR4" },
+            { name: "32G (16+16) DDR4", price: 680, type: "DDR4" }
+        ],
+        gpu: [
+            { name: "无显卡", price: 0 },
+            { name: "GTX 1060 3G", price: 950 },
+            { name: "GTX 1660", price: 1800 },
+            { name: "RTX 3060", price: 2800 },
+            { name: "RTX 3060Ti", price: 4200 }
+        ],
+        disk: [
+            { name: "240G SATA SSD", price: 320 },
+            { name: "500G NVMe SSD", price: 850 },
+            { name: "1TB NVMe SSD", price: 850 }
+        ],
+        power: [
+            { name: "400W 铜牌电源", price: 180 },
+            { name: "550W 银牌电源", price: 280 },
+            { name: "600W 金牌电源", price: 380 }
+        ],
+        case: [
+            { name: "标准办公机箱", price: 150 },
+            { name: "电竞侧透机箱", price: 280 }
+        ],
+        serviceFee: 150,
+        recommends: [
+            { 
+                name: "性价比游戏推荐", 
+                platform: "core", 
+                badge: "性价比首选",
+                config: {
+                    cpu: "i5-12400F",
+                    board: "B760 主板",
+                    memory: "16G (8+8) DDR4",
+                    gpu: "RTX 3060",
+                    disk: "500G NVMe SSD",
+                    power: "550W 银牌电源",
+                    case: "电竞侧透机箱"
+                }
+            },
+            { 
+                name: "工作室多开推荐", 
+                platform: "e5", 
+                badge: "多开神器",
+                config: {
+                    cpu: "E5 2696 V3",
+                    board: "X99 DDR4 主板 (华南金牌)",
+                    memory: "32G (16+16) ECC REG",
+                    gpu: "无显卡",
+                    disk: "240G SATA SSD",
+                    power: "600W 金牌电源",
+                    case: "标准办公机箱"
+                }
+            },
+            { 
+                name: "办公家用推荐", 
+                platform: "core", 
+                badge: "稳定之选",
+                config: {
+                    cpu: "i3-12100",
+                    board: "H610 主板",
+                    memory: "16G (8+8) DDR4",
+                    gpu: "无显卡",
+                    disk: "500G NVMe SSD",
+                    power: "400W 铜牌电源",
+                    case: "标准办公机箱"
+                }
+            }
+        ]
+    };
+
+    if(!localStorage.getItem(PASSWORD_KEY)) {
+        localStorage.setItem(PASSWORD_KEY, "admin123");
+    }
+
+    let APP_DATA = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_DATA;
+
+    const passwordModal = document.getElementById('passwordModal');
+    const adminPasswordInput = document.getElementById('adminPasswordInput');
+    const verifyPasswordBtn = document.getElementById('verifyPasswordBtn');
+
+    let clickCount = 0;
+    document.querySelector('.hero-content h1').addEventListener('click', () => {
+        clickCount++;
+        if(clickCount >= 5) {
+            clickCount = 0;
+            passwordModal.classList.add('active');
+        }
+    });
+
+    verifyPasswordBtn.addEventListener('click', () => {
+        const currentPassword = localStorage.getItem(PASSWORD_KEY);
+        if(adminPasswordInput.value === currentPassword) {
+            passwordModal.classList.remove('active');
+            adminPasswordInput.value = '';
+            switchPage(adminPage);
+            renderAllAdminPanels();
+        } else {
+            alert('密码错误！');
+        }
+    });
+
+    function changePassword() {
+        const oldPassword = document.getElementById('oldPasswordInput').value;
+        const newPassword = document.getElementById('newPasswordInput').value;
+        const confirmPassword = document.getElementById('confirmPasswordInput').value;
+        const currentPassword = localStorage.getItem(PASSWORD_KEY);
+
+        if(oldPassword !== currentPassword) {
+            alert('当前密码错误！');
+            return;
+        }
+        if(!newPassword || newPassword.length < 6) {
+            alert('新密码至少6位！');
+            return;
+        }
+        if(newPassword !== confirmPassword) {
+            alert('两次输入的新密码不一致！');
+            return;
+        }
+
+        localStorage.setItem(PASSWORD_KEY, newPassword);
+        document.getElementById('oldPasswordInput').value = '';
+        document.getElementById('newPasswordInput').value = '';
+        document.getElementById('confirmPasswordInput').value = '';
+        alert('✅ 密码修改成功！请牢记新密码');
+    }
+
+    const allPages = document.querySelectorAll('.page');
+    const homePage = document.getElementById('homePage');
+    const e5ConfigPage = document.getElementById('e5ConfigPage');
+    const coreConfigPage = document.getElementById('coreConfigPage');
+    const guidePage = document.getElementById('guidePage');
+    const commentPage = document.getElementById('commentPage');
+    const adminPage = document.getElementById('adminPage');
+
+    const e5Card = document.getElementById('e5Card');
+    const coreCard = document.getElementById('coreCard');
+    const guideCard = document.getElementById('guideCard');
+    const commentCard = document.getElementById('commentCard');
+
+    const backHomeFromE5 = document.getElementById('backHomeFromE5');
+    const backHomeFromCore = document.getElementById('backHomeFromCore');
+    const backHomeFromGuide = document.getElementById('backHomeFromGuide');
+    const backHomeFromComment = document.getElementById('backHomeFromComment');
+    const adminBackBtn = document.getElementById('adminBackBtn');
+
+    function switchPage(targetPage) {
+        allPages.forEach(page => page.classList.remove('active'));
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function goToHome() {
+        switchPage(homePage);
+    }
+
+    e5Card.addEventListener('click', () => switchPage(e5ConfigPage));
+    coreCard.addEventListener('click', () => switchPage(coreConfigPage));
+    guideCard.addEventListener('click', () => switchPage(guidePage));
+    commentCard.addEventListener('click', () => switchPage(commentPage));
+    adminBackBtn.addEventListener('click', goToHome);
+
+    backHomeFromE5.addEventListener('click', goToHome);
+    backHomeFromCore.addEventListener('click', goToHome);
+    backHomeFromGuide.addEventListener('click', goToHome);
+    backHomeFromComment.addEventListener('click', goToHome);
+
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+            item.classList.add('active');
+            document.getElementById(`${item.dataset.panel}Panel`).classList.add('active');
+        });
+    });
+
+    function renderRecommends() {
+        const grid = document.getElementById('recommendGrid');
+        grid.innerHTML = '';
+        APP_DATA.recommends.forEach((rec, index) => {
+            const card = document.createElement('div');
+            card.className = 'config-card';
+            card.innerHTML = `
+                <div class="recommend-badge">${rec.badge}</div>
+                <h3>${rec.name}</h3>
+                <p>点击一键自动填充配置，省心省力！</p>
+            `;
+            card.addEventListener('click', () => applyRecommend(rec));
+            grid.appendChild(card);
+        });
+    }
+
+    function applyRecommend(rec) {
+        if(rec.platform === 'e5') {
+            switchPage(e5ConfigPage);
+            setTimeout(() => autoFillConfig('e5', rec.config), 100);
+        } else {
+            switchPage(coreConfigPage);
+            setTimeout(() => autoFillConfig('core', rec.config), 100);
+        }
+    }
+
+    function autoFillConfig(prefix, config) {
+        const cpuSelect = document.getElementById(`${prefix}_cpuSelect`);
+        for(let i=0; i<cpuSelect.options.length; i++) {
+            if(cpuSelect.options[i].dataset.name === config.cpu) {
+                cpuSelect.selectedIndex = i;
+                break;
+            }
+        }
+        
+        if(prefix === 'e5') updateE5Boards();
+        else updateCoreBoards();
+
+        setTimeout(() => {
+            const boardSelect = document.getElementById(`${prefix}_boardSelect`);
+            for(let i=0; i<boardSelect.options.length; i++) {
+                if(boardSelect.options[i].dataset.name === config.board) {
+                    boardSelect.selectedIndex = i;
+                    break;
+                }
+            }
+            
+            if(prefix === 'e5') updateE5Ram();
+            else updateCoreRam();
+
+            const memorySelect = document.getElementById(`${prefix}_memorySelect`);
+            for(let i=0; i<memorySelect.options.length; i++) {
+                if(memorySelect.options[i].dataset.name === config.memory) {
+                    memorySelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+            const gpuSelect = document.getElementById(`${prefix}_gpuSelect`);
+            for(let i=0; i<gpuSelect.options.length; i++) {
+                if(gpuSelect.options[i].dataset.name === config.gpu) {
+                    gpuSelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+            const diskSelect = document.getElementById(`${prefix}_diskSelect`);
+            for(let i=0; i<diskSelect.options.length; i++) {
+                if(diskSelect.options[i].dataset.name === config.disk) {
+                    diskSelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+            const powerSelect = document.getElementById(`${prefix}_powerSelect`);
+            for(let i=0; i<powerSelect.options.length; i++) {
+                if(powerSelect.options[i].dataset.name === config.power) {
+                    powerSelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+            const caseSelect = document.getElementById(`${prefix}_caseSelect`);
+            for(let i=0; i<caseSelect.options.length; i++) {
+                if(caseSelect.options[i].dataset.name === config.case) {
+                    caseSelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+            if(prefix === 'e5') calculateTotalE5();
+            else calculateTotalCore();
+        }, 100);
+    }
+
+    function renderE5Cpu() {
+        const select = document.getElementById('e5_cpuSelect');
+        select.innerHTML = '';
+        APP_DATA.e5Cpu.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.price;
+            opt.dataset.gen = item.gen;
+            opt.dataset.name = item.name;
+            opt.textContent = `${item.name} - ¥${item.price}`;
+            select.appendChild(opt);
+        });
+        updateE5Boards();
+    }
+
+    function renderCoreCpu() {
+        const select = document.getElementById('core_cpuSelect');
+        select.innerHTML = '';
+        APP_DATA.coreCpu.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.price;
+            opt.dataset.gen = item.gen;
+            opt.dataset.name = item.name;
+            opt.textContent = `${item.name} - ¥${item.price}`;
+            select.appendChild(opt);
+        });
+        updateCoreBoards();
+    }
+
+    function renderE5Memory() {
+        const select = document.getElementById('e5_memorySelect');
+        select.innerHTML = '';
+        APP_DATA.memory.filter(item => item.type === 'ECC').forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.price;
+            opt.dataset.name = item.name;
+            opt.textContent = `${item.name} - ¥${item.price}`;
+            select.appendChild(opt);
+        });
+    }
+
+    function renderCoreMemory() {
+        const select = document.getElementById('core_memorySelect');
+        select.innerHTML = '';
+        APP_DATA.memory.filter(item => item.type === 'DDR4').forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.price;
+            opt.dataset.name = item.name;
+            opt.textContent = `${item.name} - ¥${item.price}`;
+            select.appendChild(opt);
+        });
+    }
+
+    function renderGpu() {
+        const e5Gpu = document.getElementById('e5_gpuSelect');
+        const coreGpu = document.getElementById('core_gpuSelect');
+        e5Gpu.innerHTML = '';
+        coreGpu.innerHTML = '';
+        
+        APP_DATA.gpu.forEach(item => {
+            const opt1 = document.createElement('option');
+            opt1.value = item.price;
+            opt1.dataset.name = item.name;
+            opt1.textContent = `${item.name} - ¥${item.price}`;
+            e5Gpu.appendChild(opt1);
+
+            if(item.name !== "无显卡") {
+                const opt2 = document.createElement('option');
+                opt2.value = item.price;
+                opt2.dataset.name = item.name;
+                opt2.textContent = `${item.name} - ¥${item.price}`;
+                coreGpu.appendChild(opt2);
+            }
+        });
+        
+        const coreOpt = document.createElement('option');
+        coreOpt.value = 0;
+        coreOpt.dataset.name = "核芯显卡";
+        coreOpt.textContent = "核芯显卡 - ¥0";
+        coreGpu.insertBefore(coreOpt, coreGpu.firstChild);
+    }
+
+    function renderDisk() {
+        const e5Disk = document.getElementById('e5_diskSelect');
+        const coreDisk = document.getElementById('core_diskSelect');
+        e5Disk.innerHTML = '';
+        coreDisk.innerHTML = '';
+        APP_DATA.disk.forEach(item => {
+            const opt1 = document.createElement('option');
+            opt1.value = item.price;
+            opt1.dataset.name = item.name;
+            opt1.textContent = `${item.name} - ¥${item.price}`;
+            e5Disk.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = item.price;
+            opt2.dataset.name = item.name;
+            opt2.textContent = `${item.name} - ¥${item.price}`;
+            coreDisk.appendChild(opt2);
+        });
+    }
+
+    function renderPower() {
+        const e5Power = document.getElementById('e5_powerSelect');
+        const corePower = document.getElementById('core_powerSelect');
+        e5Power.innerHTML = '';
+        corePower.innerHTML = '';
+        APP_DATA.power.forEach(item => {
+            const opt1 = document.createElement('option');
+            opt1.value = item.price;
+            opt1.dataset.name = item.name;
+            opt1.textContent = `${item.name} - ¥${item.price}`;
+            e5Power.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = item.price;
+            opt2.dataset.name = item.name;
+            opt2.textContent = `${item.name} - ¥${item.price}`;
+            corePower.appendChild(opt2);
+        });
+    }
+
+    function renderCase() {
+        const e5Case = document.getElementById('e5_caseSelect');
+        const coreCase = document.getElementById('core_caseSelect');
+        e5Case.innerHTML = '';
+        coreCase.innerHTML = '';
+        APP_DATA.case.forEach(item => {
+            const opt1 = document.createElement('option');
+            opt1.value = item.price;
+            opt1.dataset.name = item.name;
+            opt1.textContent = `${item.name} - ¥${item.price}`;
+            e5Case.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = item.price;
+            opt2.dataset.name = item.name;
+            opt2.textContent = `${item.name} - ¥${item.price}`;
+            coreCase.appendChild(opt2);
+        });
+    }
+
+    function renderServiceFee() {
+        document.getElementById('e5_serviceFee').textContent = APP_DATA.serviceFee;
+        document.getElementById('core_serviceFee').textContent = APP_DATA.serviceFee;
+        document.getElementById('serviceFeeInput').value = APP_DATA.serviceFee;
+    }
+
+    function renderAllFrontData() {
+        renderE5Cpu();
+        renderCoreCpu();
+        renderE5Memory();
+        renderCoreMemory();
+        renderGpu();
+        renderDisk();
+        renderPower();
+        renderCase();
+        renderServiceFee();
+        renderRecommends();
+        calculateTotalE5();
+        calculateTotalCore();
+    }
+
+    const e5Cpu = document.getElementById('e5_cpuSelect');
+    const e5Board = document.getElementById('e5_boardSelect');
+    const e5RamFreq = document.getElementById('e5_ramFreqSelect');
+
+    function updateE5Boards() {
+        if(!e5Cpu.options.length) return;
+        const gen = e5Cpu.options[e5Cpu.selectedIndex].dataset.gen;
+        const boards = APP_DATA.e5Board.filter(item => item.gen.includes(gen));
+        e5Board.innerHTML = '';
+        boards.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.price;
+            opt.dataset.name = item.name;
+            opt.dataset.ramType = item.ramType;
+            opt.dataset.freq = JSON.stringify(item.freq);
+            opt.textContent = `${item.name} - ¥${item.price}`;
+            e5Board.appendChild(opt);
+        });
+        updateE5Ram();
+        calculateTotalE5();
+    }
+
+    function updateE5Ram() {
+        if (!e5Board.options.length) return;
+        const freqList = JSON.parse(e5Board.options[e5Board.selectedIndex].dataset.freq);
+        const ramType = e5Board.options[e5Board.selectedIndex].dataset.ramType;
+        e5RamFreq.innerHTML = '';
+        freqList.forEach(freq => {
+            const opt = document.createElement('option');
+            opt.value = 0;
+            opt.dataset.name = `${ramType} ${freq}`;
+            opt.textContent = `${ramType} ${freq}`;
+            e5RamFreq.appendChild(opt);
+        });
+        calculateTotalE5();
+    }
+
+    const coreCpu = document.getElementById('core_cpuSelect');
+    const coreBoard = document.getElementById('core_boardSelect');
+    const coreRamFreq = document.getElementById('core_ramFreqSelect');
+
+    function updateCoreBoards() {
+        if(!coreCpu.options.length) return;
+        const gen = coreCpu.options[coreCpu.selectedIndex].dataset.gen;
+        const boards = APP_DATA.coreBoard.filter(item => item.gen.includes(gen));
+        coreBoard.innerHTML = '';
+        boards.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.price;
+            opt.dataset.name = item.name;
+            opt.dataset.ramType = item.ramType;
+            opt.dataset.freq = JSON.stringify(item.freq);
+            opt.textContent = `${item.name} - ¥${item.price}`;
+            coreBoard.appendChild(opt);
+        });
+        updateCoreRam();
+        calculateTotalCore();
+    }
+
+    function updateCoreRam() {
+        if (!coreBoard.options.length) return;
+        const freqList = JSON.parse(coreBoard.options[coreBoard.selectedIndex].dataset.freq);
+        const ramType = coreBoard.options[coreBoard.selectedIndex].dataset.ramType;
+        coreRamFreq.innerHTML = '';
+        freqList.forEach(freq => {
+            const opt = document.createElement('option');
+            opt.value = 0;
+            opt.dataset.name = `${ramType} ${freq}`;
+            opt.textContent = `${ramType} ${freq}`;
+            coreRamFreq.appendChild(opt);
+        });
+        calculateTotalCore();
+    }
+
+    e5Cpu.addEventListener('change', updateE5Boards);
+    e5Board.addEventListener('change', updateE5Ram);
+    coreCpu.addEventListener('change', updateCoreBoards);
+    coreBoard.addEventListener('change', updateCoreRam);
+
+    function calculateTotalE5() {
+        const cpu = parseInt(e5Cpu.value) || 0;
+        const board = parseInt(e5Board.value) || 0;
+        const memory = parseInt(document.getElementById('e5_memorySelect').value) || 0;
+        const gpu = parseInt(document.getElementById('e5_gpuSelect').value) || 0;
+        const disk = parseInt(document.getElementById('e5_diskSelect').value) || 0;
+        const power = parseInt(document.getElementById('e5_powerSelect').value) || 0;
+        const case_ = parseInt(document.getElementById('e5_caseSelect').value) || 0;
+        
+        const total = cpu + board + memory + gpu + disk + power + case_;
+        document.getElementById('e5_partsTotal').textContent = `¥${total.toFixed(2)}`;
+        document.getElementById('e5_finalPrice').textContent = `¥${(total + APP_DATA.serviceFee).toFixed(2)}`;
+    }
+
+    function calculateTotalCore() {
+        const cpu = parseInt(coreCpu.value) || 0;
+        const board = parseInt(coreBoard.value) || 0;
+        const memory = parseInt(document.getElementById('core_memorySelect').value) || 0;
+        const gpu = parseInt(document.getElementById('core_gpuSelect').value) || 0;
+        const disk = parseInt(document.getElementById('core_diskSelect').value) || 0;
+        const power = parseInt(document.getElementById('core_powerSelect').value) || 0;
+        const case_ = parseInt(document.getElementById('core_caseSelect').value) || 0;
+        
+        const total = cpu + board + memory + gpu + disk + power + case_;
+        document.getElementById('core_partsTotal').textContent = `¥${total.toFixed(2)}`;
+        document.getElementById('core_finalPrice').textContent = `¥${(total + APP_DATA.serviceFee).toFixed(2)}`;
+    }
+
+    document.querySelectorAll('#e5ConfigPage .form-select').forEach(item => {
+        item.addEventListener('change', calculateTotalE5);
+    });
+    document.querySelectorAll('#coreConfigPage .form-select').forEach(item => {
+        item.addEventListener('change', calculateTotalCore);
+    });
+
+    function copyConfig(prefix) {
+        const cpu = document.getElementById(`${prefix}_cpuSelect`);
+        const board = document.getElementById(`${prefix}_boardSelect`);
+        const ramFreq = document.getElementById(`${prefix}_ramFreqSelect`);
+        const memory = document.getElementById(`${prefix}_memorySelect`);
+        const gpu = document.getElementById(`${prefix}_gpuSelect`);
+        const disk = document.getElementById(`${prefix}_diskSelect`);
+        const power = document.getElementById(`${prefix}_powerSelect`);
+        const case_ = document.getElementById(`${prefix}_caseSelect`);
+
+        const text = `
+【小黑球装机铺】${prefix === 'e5' ? 'E5服务器' : '酷睿游戏'}配置单
+CPU：${cpu.options[cpu.selectedIndex].dataset.name}
+主板：${board.options[board.selectedIndex].dataset.name}
+内存：${ramFreq.options[ramFreq.selectedIndex].dataset.name} ${memory.options[memory.selectedIndex].dataset.name}
+显卡：${gpu.options[gpu.selectedIndex].dataset.name}
+硬盘：${disk.options[disk.selectedIndex].dataset.name}
+电源：${power.options[power.selectedIndex].dataset.name}
+机箱：${case_.options[case_.selectedIndex].dataset.name}
+配件总价：${document.getElementById(`${prefix}_partsTotal`).textContent}
+最终售价：${document.getElementById(`${prefix}_finalPrice`).textContent}
+        `.trim();
+
+        navigator.clipboard.writeText(text).then(() => alert('✅ 完整配置已复制到剪贴板！'));
+    }
+
+    document.getElementById('e5_copyBtn').onclick = () => copyConfig('e5');
+    document.getElementById('core_copyBtn').onclick = () => copyConfig('core');
+
+    function renderAllAdminPanels() {
+        renderAdminTable('e5CpuTable', APP_DATA.e5Cpu, ['name', 'price', 'gen']);
+        renderAdminTable('e5BoardTable', APP_DATA.e5Board, ['name', 'price', 'gen', 'ramType']);
+        renderAdminTable('coreCpuTable', APP_DATA.coreCpu, ['name', 'price', 'gen']);
+        renderAdminTable('coreBoardTable', APP_DATA.coreBoard, ['name', 'price', 'gen', 'ramType']);
+        renderAdminTable('memoryTable', APP_DATA.memory, ['name', 'price', 'type']);
+        renderAdminTable('gpuTable', APP_DATA.gpu, ['name', 'price']);
+        renderAdminTable('diskTable', APP_DATA.disk, ['name', 'price']);
+        renderAdminTable('powerTable', APP_DATA.power, ['name', 'price']);
+        renderAdminTable('caseTable', APP_DATA.case, ['name', 'price']);
+        renderRecommendTable();
+        renderServiceFee();
+    }
+
+    function renderAdminTable(tableId, data, fields) {
+        const table = document.getElementById(tableId);
+        const tbody = table.querySelector('tbody');
+        tbody.innerHTML = '';
+        data.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            fields.forEach(field => {
+                const td = document.createElement('td');
+                if(field === 'price') {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.className = 'price-input';
+                    input.value = item[field];
+                    input.dataset.index = index;
+                    input.dataset.field = field;
+                    td.appendChild(input);
+                } else if(field === 'name' || field === 'gen' || field === 'ramType' || field === 'type') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'text-input';
+                    input.value = item[field];
+                    input.dataset.index = index;
+                    input.dataset.field = field;
+                    td.appendChild(input);
+                } else {
+                    td.textContent = item[field];
+                }
+                tr.appendChild(td);
+            });
+            const tdDel = document.createElement('td');
+            const delBtn = document.createElement('button');
+            delBtn.className = 'delete-btn';
+            delBtn.textContent = '删除';
+            delBtn.onclick = () => deleteItem(tableId.replace('Table', ''), index);
+            tdDel.appendChild(delBtn);
+            tr.appendChild(tdDel);
+            tbody.appendChild(tr);
+        });
+    }
+
+    function addItem(type) {
+        const newItem = {};
+        if(type === 'e5Cpu' || type === 'coreCpu') {
+            newItem.name = '新CPU型号';
+            newItem.price = 1000;
+            newItem.gen = 'v3';
+        } else if(type === 'e5Board' || type === 'coreBoard') {
+            newItem.name = '新主板型号';
+            newItem.price = 500;
+            newItem.gen = '12代';
+            newItem.ramType = 'DDR4';
+            newItem.freq = ['3200MHz'];
+        } else if(type === 'memory') {
+            newItem.name = '新内存规格';
+            newItem.price = 300;
+            newItem.type = 'DDR4';
+        } else if(type === 'gpu') {
+            newItem.name = '新显卡型号';
+            newItem.price = 2000;
+        } else if(type === 'disk') {
+            newItem.name = '新硬盘规格';
+            newItem.price = 500;
+        } else if(type === 'power') {
+            newItem.name = '新电源规格';
+            newItem.price = 200;
+        } else if(type === 'case') {
+            newItem.name = '新机箱类型';
+            newItem.price = 150;
+        }
+        APP_DATA[type].push(newItem);
+        renderAllAdminPanels();
+    }
+
+    function deleteItem(type, index) {
+        if(confirm('确定要删除这个配件吗？')) {
+            APP_DATA[type].splice(index, 1);
+            renderAllAdminPanels();
+        }
+    }
+
+    function saveAdminData(type) {
+        const table = document.getElementById(`${type}Table`);
+        const inputs = table.querySelectorAll('input');
+        inputs.forEach(input => {
+            const index = parseInt(input.dataset.index);
+            const field = input.dataset.field;
+            if(field === 'price') {
+                APP_DATA[type][index][field] = parseInt(input.value);
+            } else {
+                APP_DATA[type][index][field] = input.value;
+            }
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(APP_DATA));
+        renderAllFrontData();
+        alert('✅ 保存成功！前台已实时更新');
+    }
+
+    function renderRecommendTable() {
+        const table = document.getElementById('recommendTable');
+        const tbody = table.querySelector('tbody');
+        tbody.innerHTML = '';
+        
+        APP_DATA.recommends.forEach((rec, index) => {
+            const tr = document.createElement('tr');
+            
+            // 配置名称
+            const td1 = document.createElement('td');
+            const input1 = document.createElement('input');
+            input1.type = 'text';
+            input1.className = 'text-input';
+            input1.value = rec.name;
+            input1.dataset.index = index;
+            input1.dataset.field = 'name';
+            td1.appendChild(input1);
+            tr.appendChild(td1);
+            
+            // 标签文字
+            const td2 = document.createElement('td');
+            const input2 = document.createElement('input');
+            input2.type = 'text';
+            input2.className = 'text-input';
+            input2.value = rec.badge;
+            input2.dataset.index = index;
+            input2.dataset.field = 'badge';
+            td2.appendChild(input2);
+            tr.appendChild(td2);
+            
+            // 目标平台（下拉选择）
+            const td3 = document.createElement('td');
+            const select3 = document.createElement('select');
+            select3.className = 'table-select';
+            select3.dataset.index = index;
+            select3.dataset.field = 'platform';
+            select3.innerHTML = `
+                <option value="e5" ${rec.platform === 'e5' ? 'selected' : ''}>e5</option>
+                <option value="core" ${rec.platform === 'core' ? 'selected' : ''}>core</option>
+            `;
+            select3.onchange = () => updateRecommendOptions(index, select3.value);
+            td3.appendChild(select3);
+            tr.appendChild(td3);
+            
+            // CPU型号（下拉选择）
+            const td4 = document.createElement('td');
+            const select4 = createHardwareSelect(rec.platform, 'cpu', rec.config.cpu, index);
+            td4.appendChild(select4);
+            tr.appendChild(td4);
+            
+            // 主板型号（下拉选择）
+            const td5 = document.createElement('td');
+            const select5 = createHardwareSelect(rec.platform, 'board', rec.config.board, index);
+            td5.appendChild(select5);
+            tr.appendChild(td5);
+            
+            // 内存规格（下拉选择）
+            const td6 = document.createElement('td');
+            const select6 = createHardwareSelect(rec.platform, 'memory', rec.config.memory, index);
+            td6.appendChild(select6);
+            tr.appendChild(td6);
+            
+            // 显卡型号（下拉选择）
+            const td7 = document.createElement('td');
+            const select7 = createHardwareSelect(rec.platform, 'gpu', rec.config.gpu, index);
+            td7.appendChild(select7);
+            tr.appendChild(td7);
+            
+            // 硬盘规格（下拉选择）
+            const td8 = document.createElement('td');
+            const select8 = createHardwareSelect(rec.platform, 'disk', rec.config.disk, index);
+            td8.appendChild(select8);
+            tr.appendChild(td8);
+            
+            // 电源规格（下拉选择）
+            const td9 = document.createElement('td');
+            const select9 = createHardwareSelect(rec.platform, 'power', rec.config.power, index);
+            td9.appendChild(select9);
+            tr.appendChild(td9);
+            
+            // 机箱类型（下拉选择）
+            const td10 = document.createElement('td');
+            const select10 = createHardwareSelect(rec.platform, 'case', rec.config.case, index);
+            td10.appendChild(select10);
+            tr.appendChild(td10);
+            
+            // 操作
+            const td11 = document.createElement('td');
+            const delBtn = document.createElement('button');
+            delBtn.className = 'delete-btn';
+            delBtn.textContent = '删除';
+            delBtn.onclick = () => deleteRecommend(index);
+            td11.appendChild(delBtn);
+            tr.appendChild(td11);
+            
+            tbody.appendChild(tr);
+        });
+    }
+
+    function createHardwareSelect(platform, type, selectedValue, index) {
+        const select = document.createElement('select');
+        select.className = 'table-select';
+        select.dataset.index = index;
+        select.dataset.field = type;
+        select.dataset.config = 'true';
+        
+        let options = [];
+        if(type === 'cpu') {
+            options = platform === 'e5' ? APP_DATA.e5Cpu : APP_DATA.coreCpu;
+        } else if(type === 'board') {
+            options = platform === 'e5' ? APP_DATA.e5Board : APP_DATA.coreBoard;
+        } else if(type === 'memory') {
+            options = platform === 'e5' 
+                ? APP_DATA.memory.filter(m => m.type === 'ECC') 
+                : APP_DATA.memory.filter(m => m.type === 'DDR4');
+        } else if(type === 'gpu') {
+            options = APP_DATA.gpu;
+        } else if(type === 'disk') {
+            options = APP_DATA.disk;
+        } else if(type === 'power') {
+            options = APP_DATA.power;
+        } else if(type === 'case') {
+            options = APP_DATA.case;
+        }
+        
+        options.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.name;
+            opt.textContent = item.name;
+            if(item.name === selectedValue) {
+                opt.selected = true;
+            }
+            select.appendChild(opt);
+        });
+        
+        return select;
+    }
+
+    function updateRecommendOptions(index, newPlatform) {
+        APP_DATA.recommends[index].platform = newPlatform;
+        
+        // 更新默认配置
+        if(newPlatform === 'e5') {
+            APP_DATA.recommends[index].config = {
+                cpu: APP_DATA.e5Cpu[0].name,
+                board: APP_DATA.e5Board[0].name,
+                memory: APP_DATA.memory.filter(m => m.type === 'ECC')[0].name,
+                gpu: APP_DATA.gpu[0].name,
+                disk: APP_DATA.disk[0].name,
+                power: APP_DATA.power[0].name,
+                case: APP_DATA.case[0].name
+            };
+        } else {
+            APP_DATA.recommends[index].config = {
+                cpu: APP_DATA.coreCpu[0].name,
+                board: APP_DATA.coreBoard[0].name,
+                memory: APP_DATA.memory.filter(m => m.type === 'DDR4')[0].name,
+                gpu: APP_DATA.gpu[0].name,
+                disk: APP_DATA.disk[0].name,
+                power: APP_DATA.power[0].name,
+                case: APP_DATA.case[0].name
+            };
+        }
+        
+        renderRecommendTable();
+    }
+
+    function addRecommend() {
+        APP_DATA.recommends.push({
+            name: "新推荐配置",
+            platform: "core",
+            badge: "店长推荐",
+            config: {
+                cpu: APP_DATA.coreCpu[0].name,
+                board: APP_DATA.coreBoard[0].name,
+                memory: APP_DATA.memory.filter(m => m.type === 'DDR4')[0].name,
+                gpu: APP_DATA.gpu[0].name,
+                disk: APP_DATA.disk[0].name,
+                power: APP_DATA.power[0].name,
+                case: APP_DATA.case[0].name
+            }
+        });
+        renderRecommendTable();
+    }
+
+    function deleteRecommend(index) {
+        if(confirm('确定要删除这个推荐配置吗？')) {
+            APP_DATA.recommends.splice(index, 1);
+            renderRecommendTable();
+        }
+    }
+
+    function saveRecommend() {
+        const table = document.getElementById('recommendTable');
+        
+        // 保存文本输入
+        const textInputs = table.querySelectorAll('input.text-input');
+        textInputs.forEach(input => {
+            const index = parseInt(input.dataset.index);
+            const field = input.dataset.field;
+            APP_DATA.recommends[index][field] = input.value;
+        });
+        
+        // 保存平台选择
+        const platformSelects = table.querySelectorAll('select[data-field="platform"]');
+        platformSelects.forEach(select => {
+            const index = parseInt(select.dataset.index);
+            APP_DATA.recommends[index].platform = select.value;
+        });
+        
+        // 保存硬件配置选择
+        const configSelects = table.querySelectorAll('select[data-config="true"]');
+        configSelects.forEach(select => {
+            const index = parseInt(select.dataset.index);
+            const field = select.dataset.field;
+            APP_DATA.recommends[index].config[field] = select.value;
+        });
+        
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(APP_DATA));
+        renderRecommends();
+        alert('✅ 推荐配置保存成功！');
+    }
+
+    function saveServiceFee() {
+        APP_DATA.serviceFee = parseInt(document.getElementById('serviceFeeInput').value);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(APP_DATA));
+        renderServiceFee();
+        calculateTotalE5();
+        calculateTotalCore();
+        alert('✅ 服务费保存成功！');
+    }
+
+    function exportFullCode() {
+        const newCode = document.documentElement.outerHTML.replace(
+            'const DEFAULT_DATA = ' + JSON.stringify(DEFAULT_DATA, null, 4),
+            'const DEFAULT_DATA = ' + JSON.stringify(APP_DATA, null, 4)
+        );
+        const blob = new Blob([newCode], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '小黑球装机铺_最新代码.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        alert('✅ 完整代码已导出！直接替换GitHub里的文件即可更新网站');
+    }
+
+    window.onload = () => {
+        renderAllFrontData();
+    };
+</script>
+</body>
+</html>
